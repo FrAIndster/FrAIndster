@@ -15,6 +15,7 @@ services:
       - db
       - redis
 
+
   frontend:
     build:
       context: ./frontend
