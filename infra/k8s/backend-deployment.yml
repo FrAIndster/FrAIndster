@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fraindster-backend
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: fraindster-backend
+  template:
+    metadata:
+      labels:
+        app: fraindster-backend
+    spec:
+      containers:
+      - name: backend
+        image: fraindster-backend:latest
+        ports:
+        - containerPort: 8000
+        env:
+        - name: ANTHROPIC_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: fraindster-secrets
+              key: anthropic-api-key
+        - name: DATABASE_URL
+          valueFrom:
+            configMapKeyRef:
+              name: fraindster-config
+              key: database-url 
